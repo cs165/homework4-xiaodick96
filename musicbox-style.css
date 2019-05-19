@@ -1,3 +1,41 @@
 /*
 TODO(you): Write any additional styles you need here.
 */
+#gifbox {
+  flex-grow: 1;
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+}
+
+#gifbox.show .back {
+  display: none;
+}
+
+#play {
+  width: 60px;
+  height: 60px;
+  background-image: url('./images/play.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+#exit {
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  z-index: 3;
+  border-radius: 50%;
+  background-color: white;
+  background-image: url('./images/exit.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+#play.pause {
+  background-image: url('./images/pause.png');
+}
