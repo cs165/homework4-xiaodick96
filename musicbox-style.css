@@ -11,17 +11,6 @@ TODO(you): Write any additional styles you need here.
   flex-direction: column;
 }
 
-#gifbox {
-  flex-grow: 1;
-  background-color: black;
-  position: relative;
-  overflow: hidden;
-}
-
-#gifbox.show .back {
-  display: none;
-}
-
 .ground {
   display: flex;
   background-size: cover;
@@ -38,6 +27,25 @@ TODO(you): Write any additional styles you need here.
   z-index: 2;
 }
 
+#gifbox {
+  flex-grow: 1;
+  background-color: gray;
+  position: relative;
+  overflow: hidden;
+}
+
+#gifbox.show .back {
+  display: none;
+}
+
+#ctrlbar {
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
 #play {
   width: 60px;
   height: 60px;
@@ -45,6 +53,20 @@ TODO(you): Write any additional styles you need here.
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
+}
+
+#play.pause {
+  background-image: url('./images/pause.png');
+}
+
+#loading {
+  height: 100vh;
+  color: #e2e2e2;
+  font-size: 2em;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #exit {
@@ -60,16 +82,4 @@ TODO(you): Write any additional styles you need here.
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
-}
-
-#play.pause {
-  background-image: url('./images/pause.png');
-}
-
-#ctrlbar {
-  height: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
 }

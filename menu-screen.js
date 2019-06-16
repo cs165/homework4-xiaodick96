@@ -10,7 +10,7 @@ class MenuScreen {
     this.errorElement = containerElement.querySelector("#error");
     this.selectContainer = containerElement.querySelector('#song-selector');
     this.inputContainer = containerElement.querySelector('#query-input');
-    this.theme = ['candy', 'charlie brown', 'computers', 'dance', 'donuts', 'hello kitty', 'flowers', 'nature', 'turtles', 'space'];
+    this.THEME = ['candy', 'charlie brown', 'computers', 'dance', 'donuts', 'hello kitty', 'flowers', 'nature', 'turtles', 'space'];
 
     const songs = new Song(this.selectContainer);
     this.randomTheme();
@@ -19,8 +19,8 @@ class MenuScreen {
   }
   // TODO(you): Add methods as necessary.
   randomTheme() {
-    const index = Math.floor(Math.random() * this.theme.length);
-    this.inputContainer.value = this.theme[index];
+    const index = Math.floor(Math.random() * this.THEME.length);
+    this.inputContainer.value = this.THEME[index];
   }
 
   show() {
