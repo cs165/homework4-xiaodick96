@@ -29,7 +29,7 @@ class App {
   // TODO(you): Add methods as necessary.
   _Fetching(event) { //Thanks for Nian's api_key :P
     this.loadingElement.classList.remove('inactive');
-    const URL = this.URL + encodeURIComponent(event.detail.gifValue) + "&api_key=FjJaTP04iY5rAwcEASKET51wyx9VZ2V8&limit=25&rating=g";
+    const URL = this.URL + encodeURIComponent(event.detail.gifValue) + "&api_key=obTsipKBr19XCPqZbDuxMNd3gvxJMJiL&limit=25&rating=g";
     const onJsonReady = (json) => {
       let imgURL = [];
       if(json.data.length > 2) {
