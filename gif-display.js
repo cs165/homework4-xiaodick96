@@ -1,47 +1,60 @@
 // This class will represent the gif display area. It keeps track of which gif
 // is being shown and can select a new random gif to be shown.
-//
+// 
 // See HW4 writeup for more hints and details.
 class GifDisplay {
-  constructor(theme) {
-    console.log("there is gifDisplay");
-    console.log(theme);
-    this.theme = theme;
-    this.gifInfo = new Array();
-    this.onJsonReady = this.onJsonReady.bind(this);
-    this.showgif = this.showgif.bind(this);
+  constructor(containerElement, imgURL) {
+    // TODO(you): Implement the constructor and add fields as necessary.
+    this.containerElement = containerElement;
+    this.foreground = containerElement.querySelector(".ground.fore");
+    this.background = containerElement.querySelector(".ground.back");
+    this.imgURL = imgURL;
+    this.status = false;
+    this.index = -1;
+    
+    this._onKick = this._onKick.bind(this);
+
+    document.addEventListener("Kick", this._onKick);
+
+    this._preload(0);
+  }
+  // TODO(you): Add methods as necessary.
+  _preload(index) {
+    if(index < this.imgURL.length) {
+      const image = new Image();
+      image.addEventListener("load", () => {
+        index++;
+        this._preload(index);
+        document.dispatchEvent(new CustomEvent("Loading", {
+          detail: {
+            Index: (index/this.imgURL.length*100).toFixed(0)
+          }
+        }));
+      });
+      image.src = this.imgURL[index];
+    }else {
+      document.dispatchEvent(new CustomEvent("Loaded"));
+      this.randomGif(this.foreground);
+      this.randomGif(this.background);
+    }
   }
 
-  onJsonReady(json) {
-    this.gifInfo = json;
-    console.log(this.gifInfo);
-    this.showgif();
+  randomGif(containerElement) {
+    let index;
+    do {
+      index = Math.floor(Math.random() * this.imgURL.length);
+    }while(this.index === index);
+    containerElement.style.backgroundImage = 'url(' + this.imgURL[index] + ')';
+    this.index = index;
   }
-
-  _onResponse(response) {
-    return response.json();
- }
- loadgif(){
-   fetch('https://api.giphy.com/v1/gifs/search?q='+this.theme+'&api_key=obTsipKBr19XCPqZbDuxMNd3gvxJMJiL&limit=25&rating=g')
-       .then(this._onResponse)
-       .then(this.onJsonReady);
-   console.log("success got data");
-
- }
- showgif(){
-   console.log(this.gifInfo);
-   const gifUrl = this.gifInfo.data[0].images.downsized.url.slice(6);
-   var gifscreen = document.querySelector('#music_screen');
-   console.log(gifUrl);
-   console.log(gifscreen.style);
-   gifscreen.style.backgroundImage = "url("+gifUrl+")";
-
- }
- nextgif(num){
-   if(num>=25) num = 0;
-   const gifUrl = this.gifInfo.data[num].images.downsized.url.slice(6);
-   var gifscreen = document.querySelector('#music_screen');
-   gifscreen.style.backgroundImage = "url("+gifUrl+")";
- }
+  _onKick() {
+    if(this.status) {
+      this.status = false;
+      this.randomGif(this.background);
+    }else {
+      this.status = true;
+      this.randomGif(this.foreground);
+    }
+    this.containerElement.classList.toggle('show');
+  }
 }
-

@@ -10,7 +10,7 @@
 class MusicScreen {
   constructor(musicspace) {
     // TODO(you): Implement the constructor and add fields as necessary.
-	this.musicspace=musicspace;
+	this.containerElement = containerElement;
 	this.gifboxElement = musicspace.querySelector("#gifbox");
 	this.playElement = musicspace.querySelector("#play");
     this.exitElement = musicspace.querySelector("#exit");
@@ -19,14 +19,14 @@ class MusicScreen {
     this.playButton = new PlayButton(this.playElement);
     this.status = false; //default pause
 	
-	this._stat = this._stat.bind(this);
+	this._Status = this._Status.bind(this);
 	
 	document.addEventListener("Status", this._stat);
 	
-	this._quit();
+	this._onExit();
   }
   // TODO(you): Add methods as necessary.
-  load(imgURL, songURL) {
+  preload(imgURL, songURL) {
 	  this.gifDisplay = new GifDisplay(this.gifboxElement, imgURL);
 	  this.audioPlayer = new AudioPlayer();
 	  this.audioPlayer.setSong(songURL);
@@ -35,18 +35,29 @@ class MusicScreen {
 	  });	
 	  this.playButton.reset();
   }
-  _quit(){
-	  this.exitElement.addEventListener('click', () => {
-		  document.dispatchEvent(new CustomEvent("Exit"));
-	  });
+  show() {
+    this.containerElement.classList.remove('inactive');
   }
-  _stat(){
-	  if(this.status){
-		  this.status = false;
-		  this.audioPlayer.pause();
-	  }else {
-		  this.status = true;
-		  this.audioPlayer.play();
-	  }
+
+  hide() {
+    this.containerElement.classList.add('inactive');
+    this.status = false;
+    this.audioPlayer.pause();
+  }
+
+  _onExit() {
+    this.exitElement.addEventListener('click', () => {
+      document.dispatchEvent(new CustomEvent("Exit"));
+    });
+  }
+
+  _Status() {
+    if(this.status) { //to pause
+      this.status = false;
+      this.audioPlayer.pause();
+    }else { //to play
+      this.status = true;
+      this.audioPlayer.play();
+    }
   }
 }
